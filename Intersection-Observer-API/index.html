@@ -1,0 +1,145 @@
+<!-- The intersecion observer API is a Web API that allows developers to asynchrounously observe 
+changes in the intersection(visibilyt) of a target element with an ancestor element or the top-level document's viewport 
+This API is particurlay useful for lazy-loading images, infinite-scorlling, tracking ad visibility and implementing
+animations when elements come into view 
+
+The Intersection Observer API provides a way to execute a callback function 
+whenever one element (the target) enters or exits the visible area of another element (the root). 
+The API lets you create an IntersectionObserver instance, which takes a callback function and an options object as arguments.
+
+Steps to create intersection observer
+1.Create instance of the IntersectionObserver, pass it a callback function and option object
+2.The callback function exectued when the target element's visibility changes
+3.You can specify which element you want to observe by calling the observe method on the IntersectionObserver instance 
+
+
+Below example ensures that the image is only loaded when it comes into view, 
+which can help improve page load times and reduce bandwidth usage. 
+
+
+Use cases of intersection observer API
+1.Lazy-loading images
+2.Infinite scrolling
+3.Animation scrolling
+4.Tracking ad visibilty
+5.Lazy loading iframes
+6.Reporting analytic of which section of the web page viewed most or like wise
+7.Loading more content on User Interaction -->
+
+<!-- Lazy-loading image -->
+
+<!-- <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lazy Loading Image</title>
+    <style>
+      .image-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      img {
+        width: 100%;
+        max-width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <img
+        data-src="https://via.placeholder.com/400"
+        alt="Lazy loaded example"
+        class="lazy-image"
+      />
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const lazyImage = document.querySelector(".lazy-image");
+
+        const imageObserverCallback = (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.getAttribute("data-src");
+              observer.unobserve(img);
+            }
+          });
+        };
+
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver(
+          imageObserverCallback,
+          observerOptions
+        );
+
+        observer.observe(lazyImage);
+      });
+    </script>
+  </body>
+</html> -->
+
+<!-- Lazy loading iframe -->
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lazy Load Iframe Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .content {
+        height: 1000px; /* Added height to demonstrate lazy loading */
+        background: #f4f4f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lazy-iframe {
+        width: 100%;
+        height: 500px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h2>Scroll down to load iframe</h2>
+    </div>
+    <div class="content">
+      <iframe
+        data-src="https://www.wikipedia.org/"
+        class="lazy-iframe"
+      ></iframe>
+    </div>
+    <div class="content">
+      <p>More content below the iframe...</p>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const iframes = document.querySelector(".lazy-iframe");
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.src = entry.target.getAttribute("data-src");
+              observer.unobserve(entry);
+            } else {
+            }
+          });
+        });
+        observer.observe(iframes);
+      });
+    </script>
+  </body>
+</html> -->

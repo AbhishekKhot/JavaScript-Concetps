@@ -1,0 +1,28 @@
+<!-- createDocumentFragement is a method in DOM API that creates a minimal document object.
+it is lightweight container that can hold DOM nodes, but it is not part of the main document tree.
+When you use createDocumentFragement, you can build part of the DOM tree outside of the main document,
+and then insert it into the main document in a single operation. 
+createDocumentFragement minimizes the number of reflows and replaints that the browser need to perform
+
+Mordern framework like react, vue, anguler user similar concept of batch update to update the actual DOM
+with compare to the virtual DOM 
+
+DocumentFragment can be directly used for performance optimization, batch updates, and templating in plain JavaScript.
+Modern frameworks abstract away the direct use but use similar concepts internally for efficient DOM updates.
+!-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document Fragment Example</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div>
+      <ol id="list"></ol>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

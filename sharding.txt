@@ -1,0 +1,42 @@
+advantanges of sharding
+sclability
+high availabilty 
+better write throughput
+
+disadvantages of sharding
+data rebalancing if shard data grows dispropationatliy then data rebalancing/migrations would require database downtime
+costly join operations
+what if the schema changes this can affect the availibility of the system
+referential integrity is compromised 
+e.g of referentail integrity is when let say user from table t1 gets deleted or disabled and corresponding
+products ordered by the user in table t2 are orphaned entries then it would cause the referential integrity issues
+consistency is affected in above cases
+maintaince cost is increasese
+
+type of shardings -> horizontal/vertical/range based sharding/key-hash based sharding/directory based sharding
+
+in case of hash based sharding whenever at event of database scaling there need to change in hash function
+which would cause the database downtime -> can be overideen the consistent hashing
+
+
+directory based sharding -> this helps us to mitigate the issue of elastic scaling in-consistent hashing
+we taking hit on latency here as well as there is a single point of failure what if our look server goes down
+single point of failure can be avoided with master slave architecture to choose slave as master or do some sort of
+election to choose of the slave as a master
+
+when we should opt for sharding?
+at a point where single database can't handle the requests
+adding some complexity
+having awareness of all the features
+
+case study
+cab service companies storing data based on geo location like based on cities store the user's and drivers data
+social media platforms sotring the data based on userId and connections like graph depedency it would reduce the latency and consistency
+
+
+sharding: method of distributing data across multiple machines
+partationing: splitting a subset of data within same instance
+vertical scaling has hardware limitations, so truley scalable system is horizontaly sclable
+shard is at database level and partation is at database level, we awalys shard the database and partation the data
+
+single shared could contain multiple partations

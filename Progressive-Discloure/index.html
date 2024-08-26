@@ -1,0 +1,194 @@
+<!-- Progressive Disclouser desgin pattern
+it is strategy for managing complexity in which only necessary or requested
+information is displayed at a given time
+
+some of the apporaches which falls under this pattern
+1. Hide & show
+2. Stepped Apporach
+3. Leveling system else e.g games, duolingo app
+
+4. Data visualization
+   a.Semantic zoom e.g zoom in zoom out of google maps (idle zommed out and user can zoom in as they want)
+   b.Focus+Conext
+   c.Navigator view (overview + details e.g zoom and scroll over image specific area etc)
+
+Information visualization rule
+Overview first, zoom & filter details on demand
+
+get more information by user initiation like filters etc
+
+Progress Disclouse is a technique used in application deveploment to enhance user experience by provding information
+gradually. This method helps to manage and prevent users feeling overwhelmed by too much of the information at once.
+
+Key Principles
+1.Priotrize content -> show the most important and critical content first
+2.Incremental revel -> allow users to uncover additional information or actions as needed
+3.Simplify initial view  -> Keep the initial interface as simple as possible
+
+Implementation techniques -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progressive Disclosure Examples</title>
+    <style>
+      /* Styles for Hide and Show */
+      .hidden-content {
+        display: none;
+      }
+
+      /* Styles for Stepped Approach */
+      .step {
+        display: none;
+      }
+      .step.active {
+        display: block;
+      }
+
+      /* Styles for Leveling System */
+      .level {
+        display: none;
+      }
+      .level.active {
+        display: block;
+      }
+
+      /* Styles for Accordion */
+      .accordion h3 {
+        cursor: pointer;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      .accordion .content {
+        display: none;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+      .accordion .content.visible {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hide and Show Example -->
+    <h1>Hide and Show Example</h1>
+    <p>This is some initial content. Click the button to see more.</p>
+    <button id="toggleButton">Show More</button>
+    <div id="moreContent" class="hidden-content">
+      <p>This is the additional content that was hidden before.</p>
+    </div>
+    <script>
+      const toggleButton = document.getElementById("toggleButton");
+      const moreContent = document.getElementById("moreContent");
+
+      toggleButton.addEventListener("click", () => {
+        if (
+          moreContent.style.display === "none" ||
+          moreContent.style.display === ""
+        ) {
+          moreContent.style.display = "block";
+          toggleButton.textContent = "Show Less";
+        } else {
+          moreContent.style.display = "none";
+          toggleButton.textContent = "Show More";
+        }
+      });
+    </script>
+
+    <hr />
+
+    <!-- Stepped Approach Example -->
+    <h1>Stepped Approach Example</h1>
+    <div class="step active" id="step1">
+      <h2>Step 1</h2>
+      <p>This is the content of Step 1.</p>
+      <button onclick="nextStep(1)">Next</button>
+    </div>
+    <div class="step" id="step2">
+      <h2>Step 2</h2>
+      <p>This is the content of Step 2.</p>
+      <button onclick="prevStep(2)">Previous</button>
+      <button onclick="nextStep(2)">Next</button>
+    </div>
+    <div class="step" id="step3">
+      <h2>Step 3</h2>
+      <p>This is the content of Step 3.</p>
+      <button onclick="prevStep(3)">Previous</button>
+      <button onclick="submitForm()">Submit</button>
+    </div>
+    <script>
+      function nextStep(currentStep) {
+        document
+          .getElementById("step" + currentStep)
+          .classList.remove("active");
+        document
+          .getElementById("step" + (currentStep + 1))
+          .classList.add("active");
+      }
+
+      function prevStep(currentStep) {
+        document
+          .getElementById("step" + currentStep)
+          .classList.remove("active");
+        document
+          .getElementById("step" + (currentStep - 1))
+          .classList.add("active");
+      }
+
+      function submitForm() {
+        alert("Form submitted!");
+      }
+    </script>
+
+    <hr />
+
+    <!-- Leveling System Example -->
+    <h1>Leveling System Example</h1>
+    <div class="level active" id="level1">
+      <h2>Level 1</h2>
+      <p>Complete this level to unlock the next.</p>
+      <button onclick="unlockNextLevel(1)">Complete Level</button>
+    </div>
+    <div class="level" id="level2">
+      <h2>Level 2</h2>
+      <p>Complete this level to unlock the next.</p>
+      <button onclick="unlockNextLevel(2)">Complete Level</button>
+    </div>
+    <div class="level" id="level3">
+      <h2>Level 3</h2>
+      <p>Congratulations! You have unlocked all levels.</p>
+    </div>
+    <script>
+      function unlockNextLevel(currentLevel) {
+        document
+          .getElementById("level" + currentLevel)
+          .classList.remove("active");
+        document
+          .getElementById("level" + (currentLevel + 1))
+          .classList.add("active");
+      }
+    </script>
+
+    <hr />
+
+    <!-- Accordion Example -->
+    <h1>Accordion Example</h1>
+    <div class="accordion">
+      <h3>Section 1</h3>
+      <div class="content">Detailed information for section 1</div>
+      <h3>Section 2</h3>
+      <div class="content">Detailed information for section 2</div>
+    </div>
+    <script>
+      document.querySelectorAll(".accordion h3").forEach((header) => {
+        header.addEventListener("click", () => {
+          header.nextElementSibling.classList.toggle("visible");
+        });
+      });
+    </script>
+  </body>
+</html>

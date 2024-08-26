@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "axios": "^1.7.2",
+    "fetch": "^1.1.0",
+    "jsdom": "^24.1.1",
+    "node-fetch": "^3.3.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "js",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

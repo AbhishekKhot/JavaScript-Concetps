@@ -1,0 +1,139 @@
+1. In Html why do we use doctypes?
+Ans: to tell the brower which version of HTML we are using
+
+2. What is better place to link script file in HTML?
+Ans: better to put just before closing the body, reason beging if script is accessing any DOM elements then it would get access to it
+
+we can before the body, even when scirpt is accessing the DOM element with differ tag, this will tell brower to hold the exection of js until DOM element is not rendered
+
+function a() {
+  console.log("A");
+}
+
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+a();
+
+console.log("C");
+
+Promise.resolve().then(() => {
+  console.log("D");
+});
+
+console.log("First");
+setTimeout(() => {
+  console.log("Second");
+}, 5 * 1000);
+
+code runs line by line inside global execution context of javascript callstack
+call stack exectute the code received immeditely, it has no capability for async does not wait just immedidate execution
+
+setTimeout setInterval Promises are part of WEBAPI not the feature of javascript
+
+background/asynchronous task are added to callback/task queue once the timer is passed by the javascript event loop
+which is continousley monitring the callback/task queue
+event loop only puts functions into callstack from callback/task queue if call stack is empty
+below is the example
+console.log("A");
+console.log("B");
+setTimeout(() => {
+  console.log("C");
+}, 0);
+console.log("D");
+console.log("E");
+
+above callstack will exectue console.log("A") and console.log("B")
+then setTimeout will be resolved printing console.log("C") is ready but callstack is not empty still
+callstack will exectute console.log("D") and console.log("E") and global exectuion context will be removed
+then event loop puts console.log("C") into the callstack
+
+how Promises handled by the browser
+
+async function getData() {
+  return 100;
+}
+
+console.log("A");
+console.log("B");
+
+setTimeout(() => {
+  console.log("C");
+}, 0);
+
+getData().then(() => {
+  console.log("Data received");
+});
+
+console.log("D");
+console.log("E");
+
+here console.log("Data received") callback function will get priority over console.log("C")
+as promises are handled by the micro task queue and setTimeout are handled by the task/callback queue, As 
+micro task queue has more priorty as soon as call stack global exection context gets deleted and call stack become empty
+micro task queue task gets pushed to call stack and then task/callback queue task gets pushed to queue
+
+Promises and Mutation Observers uses micro task queue with high priority
+
+javascript stravation: it happens because in the micro task queue if one executes and create another callback
+function it continously happens and the micro task queue is not free. due it's higher priority it runs again and again
+whenever the call stack is free there is no chance of callback queue to run. due to this callback queue go into stravation
+
+javascript is a single threaded language it can do only one thing at a time 
+
+code -> parsing -> complication -> execution
+just in time complication interpretter + complier = just in time complication depending upon the js engine used
+it uses interpretter and compliter both to complie and execute the js code
+in some javascript engine there is something know as a AOT ahead of time complication where in complier
+take pice of code and try to optimize it as much as it can before it's execution
+garbage collectors and mark ans sweep algorithm
+
+v8 engine execution of javascript
+1. Javascript source code
+2. Parser 
+3. Abstract Syntax Tree 
+4. Interpreter ignition  in parallel with Complier TurboFan
+5. ByeCode  Optimized machine code by Complier stage
+
+js is an dynamically typed language as we can change varible type on runtime as well
+
+
+code reuse patterns
+simpliest way to reuse the code in react is use component
+but there are issues with using component
+1. component are 3rd party can't change them
+2. Behaviour is't shared across all the instances
+3. Behaviour is shared across multiple classes
+
+code reuse patterns in react
+1. Simple composition
+2. High order components
+3. Render callbacks
+4. mixins //avoid using
+5. Inheritance //all the functionalities achived with composition which are achived by inheritance
+
+Render prop
+1.Dynamic
+2.Isolated
+3.Easy to write and read
+
+doesn't work when you need to communicate with inner component
+
+Render callbacks
+1.Dynamic
+2.Can add info to it's childern
+3.No Collision
+
+good to use when
+1.Need to access props of the childern
+2.Packaging in new class
+
+
+In JavaScript, the super() function is used within a derived (child) class to call the constructor of its base (parent) class. This is necessary when a class extends another class and you want to ensure that the base class is properly initialized.
+
+Why super() is Used:
+Calling the Parent Constructor:
+When you extend a class using extends, the derived class inherits properties and methods from the parent class. However, if the parent class has its own constructor that initializes certain properties or performs specific logic, you need to call super() to ensure that the parent class's constructor runs.
+Accessing this in Derived Class:
+In a derived class, you cannot use this until after super() has been called. This is because super() sets up the context (this) in the derived class by invoking the parent class's constructor.
